@@ -1,0 +1,40 @@
+@import "~vazir-font/dist/Farsi-Digits/font-face-FD.css";
+
+// color classes
+$colors: (
+  "danger": $danger,
+  "info": $info,
+  "primary": $primary,
+  "success": $success,
+  "warning": $warning,
+  "light-danger": $light-danger,
+  "light-info": $light-info,
+  "light-primary": $light-primary,
+  "light-success": $light-success,
+  "light-warning": $light-warning,
+  "black": $black,
+  "white": $white,
+  "gray": $gray,
+);
+@each $name, $value in $colors {
+  .text-#{$name} {
+    color: $value;
+  }
+  .bg-#{$name} {
+    background-color: $value;
+  }
+}
+
+// font size classes
+$fonts-sizes: (
+  "xl": $font-xl,
+  "lg": $font-lg,
+  "md": $font-md,
+  "sm": $font-sm,
+  "xs": $font-xs,
+);
+@each $name, $value in $fonts-sizes {
+  .text-#{$name} {
+    font-size: $value;
+  }
+}
