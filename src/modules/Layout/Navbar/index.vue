@@ -38,6 +38,8 @@ export default {
   height: 60px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   background-color: #fff;
+  position: sticky;
+  top: 0;
 
   &__inner {
     display: flex;
