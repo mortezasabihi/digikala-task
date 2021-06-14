@@ -12,8 +12,6 @@ $colors: (
   "light-primary": $light-primary,
   "light-success": $light-success,
   "light-warning": $light-warning,
-  "black": $black,
-  "white": $white,
   "gray": $gray,
 );
 @each $name, $value in $colors {
@@ -36,5 +34,68 @@ $fonts-sizes: (
 @each $name, $value in $fonts-sizes {
   .text-#{$name} {
     font-size: $value;
+  }
+}
+
+// spacing
+@each $size, $units in $spacing-sizes {
+  // === Margin ===
+
+  .m-#{$size} {
+    @include m($size);
+  }
+
+  .mx-#{$size} {
+    @include mx($size);
+  }
+
+  .my-#{$size} {
+    @include my($size);
+  }
+
+  .ml-#{$size} {
+    @include ml($size);
+  }
+
+  .mt-#{$size} {
+    @include mt($size);
+  }
+
+  .mr-#{$size} {
+    @include mr($size);
+  }
+
+  .mb-#{$size} {
+    @include mb($size);
+  }
+
+  // === Padding ===
+
+  .p-#{$size} {
+    @include p($size);
+  }
+
+  .px-#{$size} {
+    @include px($size);
+  }
+
+  .py-#{$size} {
+    @include py($size);
+  }
+
+  .pl-#{$size} {
+    @include pl($size);
+  }
+
+  .pt-#{$size} {
+    @include pt($size);
+  }
+
+  .pr-#{$size} {
+    @include pr($size);
+  }
+
+  .pb-#{$size} {
+    @include pb($size);
   }
 }

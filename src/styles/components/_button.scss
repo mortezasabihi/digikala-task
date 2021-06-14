@@ -1,0 +1,35 @@
+@mixin button-bg($bg) {
+  background: $bg;
+  transition: all 0.3s ease;
+  &:hover {
+    background: darken($bg, 8%);
+  }
+  &:active {
+    background: darken($bg, 25%);
+  }
+}
+
+$button-colors: (
+  "success": $success,
+  "primary": $primary,
+  "warning": $warning,
+  "danger": $danger,
+  "info": $info,
+);
+
+.btn {
+  all: unset;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+@each $name, $color in $button-colors {
+  .btn--#{$name} {
+    @include button-bg($color);
+  }
+}
