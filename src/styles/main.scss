@@ -4,11 +4,14 @@
 @import "./variables/breakpoints";
 @import "./variables/colors";
 @import "./variables/typography";
-
-// global
-@import "./global";
+// mixins
+@import "./mixins/spacing";
+@import "./mixins/media-query";
 // base
 @import "./base";
-
 // grid
 @import "./grid";
+// global
+@import "./global";
+// components
+@import "./components/button";
