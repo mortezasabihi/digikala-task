@@ -3,18 +3,23 @@
     <Collapse title="محدوده قیمت" visible>
       <PriceRange />
     </Collapse>
+
+    <Collapse title="کالاهای موجود" visible>
+      <HasSellingStock />
+    </Collapse>
   </div>
 </template>
 
 <script>
 import Collapse from "./Collapse.vue";
-import { PriceRange } from "./Sections";
+import { PriceRange, HasSellingStock } from "./Sections";
 
 export default {
   name: "Filter",
   components: {
     Collapse,
     PriceRange,
+    HasSellingStock,
   },
 };
 </script>
