@@ -40,6 +40,7 @@ export default {
   background-color: #fff;
   position: sticky;
   top: 0;
+  z-index: 9;
 
   &__inner {
     display: flex;

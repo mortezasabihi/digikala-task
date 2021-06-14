@@ -18,6 +18,10 @@ $breakpoints: (
   column-gap: $gap;
 }
 
+.no-gap {
+  column-gap: unset;
+}
+
 @each $breakpoint, $width in $breakpoints {
   @media (min-width: $width) {
     @for $i from 1 through $columns {
