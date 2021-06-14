@@ -7,12 +7,16 @@
     <Collapse title="کالاهای موجود" visible>
       <HasSellingStock />
     </Collapse>
+
+    <Collapse title="مرتب سازی بر اساس" visible>
+      <Sort />
+    </Collapse>
   </div>
 </template>
 
 <script>
 import Collapse from "./Collapse.vue";
-import { PriceRange, HasSellingStock } from "./Sections";
+import { PriceRange, HasSellingStock, Sort } from "./Sections";
 
 export default {
   name: "Filter",
@@ -20,6 +24,7 @@ export default {
     Collapse,
     PriceRange,
     HasSellingStock,
+    Sort,
   },
 };
 </script>

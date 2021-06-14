@@ -1,9 +1,7 @@
 <template>
-  <div class="filter-has-selling-stock">
-    <label>
-      <input type="checkbox" name="has_selling_stock" v-model="value" />
-      نمایش کالا های موجود در انبار
-    </label>
+  <div class="form-group">
+    <input type="checkbox" id="has-selling-stock" v-model="value" />
+    <label for="has-selling-stock"> نمایش کالا های موجود در انبار </label>
   </div>
 </template>
 

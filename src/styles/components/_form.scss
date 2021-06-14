@@ -1,0 +1,9 @@
+.form-group {
+  display: flex;
+  align-items: center;
+
+  [type="radio"] ~ label,
+  [type="checkbox"] ~ label {
+    margin-right: 4px;
+  }
+}
