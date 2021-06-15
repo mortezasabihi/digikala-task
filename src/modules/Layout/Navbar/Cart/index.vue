@@ -1,7 +1,10 @@
 <template>
   <div class="cart">
     <!-- button -->
-    <button class="cart__button" @click="toggleVisiblity">
+    <button
+      class="cart__button"
+      @click="route.path !== '/cart' && toggleVisiblity()"
+    >
       <FontAwesomeIcon :icon="['fas', 'shopping-cart']" />
 
       <!-- count -->
@@ -27,10 +30,10 @@
         </div>
 
         <div>
-          <button class="btn btn--info">
+          <router-link class="btn btn--info" to="/cart">
             ثبت سفارش
             <FontAwesomeIcon class="mr-2" :icon="['fas', 'arrow-left']" />
-          </button>
+          </router-link>
         </div>
       </div>
     </Modal>
@@ -39,6 +42,7 @@
 </template>
 
 <script>
+import { useRoute } from "vue-router";
 import { useToggle } from "@/composables";
 import Modal from "@/modules/Modal";
 import CartItem from "./Item.vue";
@@ -74,16 +78,18 @@ export default {
   },
   setup() {
     const { isVisible, toggleVisiblity } = useToggle();
+    const route = useRoute();
 
     return {
       isVisible,
       toggleVisiblity,
+      route,
     };
   },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .cart {
   position: relative;
 

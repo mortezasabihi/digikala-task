@@ -49,7 +49,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .cart-item {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr 0.5fr;

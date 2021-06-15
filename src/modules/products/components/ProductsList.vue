@@ -1,5 +1,5 @@
 <template>
-  <div class="row no-gap product-list">
+  <div class="product-list">
     <div v-for="i in 30" :key="i" class="col-xs-12 col-sm-6 col-md-4">
       <ProductCard />
     </div>
@@ -17,13 +17,12 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .product-list {
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 6px -1px,
-    rgba(0, 0, 0, 0.06) 0 2px 4px -1px;
+  @extend .card;
+  @extend .row;
+  @extend .no-gap;
+  @extend .mb-3;
 
   .col-xs-12 {
     border-left: 1px solid rgba(0, 0, 0, 0.1);

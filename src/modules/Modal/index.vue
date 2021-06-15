@@ -46,6 +46,7 @@
 
 <script>
 import { ref, watch, nextTick } from "vue";
+import { useRoute } from "vue-router";
 
 export default {
   name: "Modal",
@@ -68,6 +69,12 @@ export default {
         showModal.value = show;
         showModal.value && nextTick(() => modal.value.focus());
       }
+    );
+
+    const route = useRoute();
+    watch(
+      () => route.path,
+      () => showModal.value && closeModal()
     );
 
     return {

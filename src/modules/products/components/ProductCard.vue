@@ -31,6 +31,12 @@
         تومان
       </div>
       <!-- /price -->
+
+      <!-- add to cart -->
+      <button type="button" class="btn btn--info mt-3">
+        افزودن به سبد خرید
+      </button>
+      <!-- /add to cart -->
     </div>
     <!-- /body -->
   </div>
@@ -48,7 +54,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .product-card {
   display: flex;
   flex-direction: column;
@@ -81,6 +87,11 @@ export default {
     display: block;
     margin: 0 auto;
     margin-bottom: 15px;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
   }
 
   &__title {

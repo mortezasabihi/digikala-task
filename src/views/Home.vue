@@ -20,7 +20,7 @@
 
 <script>
 import Filter from "@/modules/Filter/index";
-import { ProductsList } from "@/modules/products";
+import { ProductsList } from "@/modules/Products";
 
 export default {
   name: "HomePage",
