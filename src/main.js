@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
+import configureStore from "@/store/configureStore";
 import "@/plugins";
 
 const app = createApp(App);
@@ -18,4 +19,6 @@ app.config.globalProperties.$filters = {
     return value.toLocaleString();
   },
 };
+// setup store (reudx)
+app.config.globalProperties.$store = configureStore();
 app.mount("#app");
