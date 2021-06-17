@@ -1,12 +1,13 @@
 <template>
-  <div class="filter-sort">
+  <div>
     <div class="form-group">
       <input
         type="radio"
         name="sort"
         id="most-views"
-        :value="4"
-        v-model="sort"
+        :value="VALUES.mostViews"
+        :checked="modelValue === VALUES.mostViews"
+        @input="update($event.target.value)"
       />
       <label for="most-views">بیشترین بازدید</label>
     </div>
@@ -15,8 +16,9 @@
         type="radio"
         name="sort"
         id="most-relavent"
-        :value="22"
-        v-model="sort"
+        :value="VALUES.mostRelavent"
+        :checked="modelValue === VALUES.mostRelavent"
+        @input="update($event.target.value)"
       />
       <label for="most-relavent">محبوب ترین</label>
     </div>
@@ -25,8 +27,9 @@
         type="radio"
         name="sort"
         id="customers-recommendation"
-        :value="27"
-        v-model="sort"
+        :value="VALUES.customerRecommendation"
+        :checked="modelValue === VALUES.customerRecommendation"
+        @input="update($event.target.value)"
       />
       <label for="customers-recommendation">پیشنهاد مشتریان</label>
     </div>
@@ -34,11 +37,27 @@
 </template>
 
 <script>
+const VALUES = {
+  mostViews: 4,
+  mostRelavent: 22,
+  customerRecommendation: 27,
+};
+
 export default {
   name: "FilterSort",
-  data() {
+  props: {
+    modelValue: {
+      required: true,
+      type: Number,
+      validator: (value) => Object.values(VALUES).includes(value),
+    },
+  },
+  setup(_, { emit }) {
+    const update = (value) => emit("update:modelValue", parseInt(value));
+
     return {
-      sort: 4,
+      update,
+      VALUES,
     };
   },
 };

@@ -7,8 +7,9 @@
         id="min"
         class="filter-price-range__input"
         :min="min"
-        v-model="min"
-        step="any"
+        :value="priceMin"
+        @input="update($event.target.value, 'priceMin')"
+        placeholder="حداقل"
       />
     </div>
     <div class="filter-price-range__item">
@@ -18,7 +19,9 @@
         id="max"
         class="filter-price-range__input"
         :max="max"
-        v-model="max"
+        :value="priceMax"
+        @input="update($event.target.value, 'priceMax')"
+        :placeholder="`حداکثر ${max}`"
       />
     </div>
   </div>
@@ -27,10 +30,35 @@
 <script>
 export default {
   name: "FilterPriceRange",
-  data() {
+  props: {
+    min: {
+      required: true,
+      type: Number,
+    },
+    max: {
+      required: true,
+      type: Number,
+    },
+    priceMin: {
+      required: false,
+      type: Number,
+    },
+    priceMax: {
+      required: false,
+      type: Number,
+    },
+  },
+  setup(props, { emit }) {
+    const update = (value, name) => {
+      if (name === "priceMax") {
+        value <= props.max && emit(`update:${name}`, parseInt(value));
+      } else if (name === "priceMin") {
+        value >= props.min && emit(`update:${name}`, parseInt(value));
+      }
+    };
+
     return {
-      min: 1000,
-      max: 10000000,
+      update,
     };
   },
 };
