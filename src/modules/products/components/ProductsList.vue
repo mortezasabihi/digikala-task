@@ -1,49 +1,70 @@
 <template>
-  <div class="product-list">
-    <div v-for="i in 30" :key="i" class="col-xs-12 col-sm-6 col-md-4">
-      <ProductCard />
+  <!-- loading -->
+  <ProductsLoading v-if="loading && !products.length" />
+  <!-- /loading -->
+
+  <div v-else class="card row no-gap mb-3">
+    <div
+      v-for="product in products"
+      :key="product.id"
+      class="col-xs-12 col-sm-6 col-md-4"
+    >
+      <ProductCard :product="product" />
     </div>
   </div>
+
+  <!-- loading spinner  -->
+  <LoadingSpinner v-if="loading && products.length" />
+  <!-- /loading spinner  -->
 </template>
 
 <script>
-import ProductCard from "./ProductCard.vue";
+import { computed } from "vue";
+import { useStore } from "vuex";
+import ProductsLoading from "./ProductsLoading";
+import ProductCard from "./ProductCard";
+import { LoadingSpinner } from "@/modules/Ui";
+import { PRODUCTS_MODULE } from "@/modules/Products/store";
+import { LOADING, PRODUCTS } from "@/modules/Products/store/state";
 
 export default {
   name: "ProductsList",
   components: {
+    ProductsLoading,
     ProductCard,
+    LoadingSpinner,
+  },
+  setup() {
+    const store = useStore();
+
+    return {
+      loading: computed(() => store.state[PRODUCTS_MODULE][LOADING]),
+      products: computed(() => store.state[PRODUCTS_MODULE][PRODUCTS]),
+    };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.product-list {
-  @extend .card;
-  @extend .row;
-  @extend .no-gap;
-  @extend .mb-3;
+.col-xs-12 {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
-  .col-xs-12 {
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-
-    &:nth-child(3n) {
-      @include md_down {
-        border-left: none;
-      }
-    }
-
-    &:nth-child(2n) {
-      @include sm_up {
-        border-left: none;
-      }
-    }
-
+  &:nth-child(3n) {
     @include md_down {
-      &:nth-last-child(-n + 3) {
-        border-bottom: none;
-      }
+      border-left: none;
+    }
+  }
+
+  &:nth-child(2n) {
+    @include sm_up {
+      border-left: none;
+    }
+  }
+
+  @include md_down {
+    &:nth-last-child(-n + 3) {
+      border-bottom: none;
     }
   }
 }

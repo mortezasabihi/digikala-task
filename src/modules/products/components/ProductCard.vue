@@ -1,7 +1,16 @@
 <template>
   <div class="product-card">
     <!-- status -->
-    <span class="product-card__status"> موجود </span>
+    <span
+      :class="[
+        'product-card__status',
+        product.status === 'marketable'
+          ? 'product-card__status--marketable'
+          : 'product-card__status--unsalable',
+      ]"
+    >
+      {{ product.status === "marketable" ? "موجود" : "ناموجود" }}
+    </span>
     <!-- /status -->
 
     <!-- thumbnail -->
@@ -9,8 +18,8 @@
       <router-link to="/">
         <img
           class="product-card__thumbnail"
-          src="https://dkstatics-public.digikala.com/digikala-products/115598446.jpg?x-oss-process=image/resize,m_lfit,h_600,w_600/quality,q_90"
-          alt=""
+          :src="product.images.main"
+          :alt="$filters.slug(product.title)"
         />
       </router-link>
     </div>
@@ -20,14 +29,15 @@
     <div class="product-card__body">
       <!-- title -->
       <router-link to="/" class="product-card__title">
-        گوشی موبایل سامسونگ مدل Galaxy A51 SM-A515F/DSN دو سیم کارت ظرفیت
-        128گیگابایت
+        {{ product.title }}
       </router-link>
       <!-- /title -->
 
       <!-- price -->
       <div class="product-card__price">
-        <strong class="product-card__price-value">۶,۱۹۵,۰۰۰</strong>
+        <strong class="product-card__price-value">
+          {{ $filters.price(product.price.selling_price) }}
+        </strong>
         تومان
       </div>
       <!-- /price -->
@@ -45,12 +55,12 @@
 <script>
 export default {
   name: "ProductCard",
-  //   props: {
-  //     product: {
-  //       required: true,
-  //       type: Object,
-  //     },
-  //   },
+  props: {
+    product: {
+      required: true,
+      type: Object,
+    },
+  },
 };
 </script>
 
@@ -60,6 +70,7 @@ export default {
   flex-direction: column;
   padding: 20px;
   position: relative;
+  height: 100%;
 
   &:hover {
     .product-card__status {
@@ -70,7 +81,6 @@ export default {
 
   &__status {
     position: absolute;
-    background-color: $success;
     color: #fff;
     padding: 6px 8px;
     font-size: 12px;
@@ -78,6 +88,14 @@ export default {
     visibility: hidden;
     opacity: 0;
     transition: all 0.1s ease-in-out;
+
+    &--marketable {
+      background-color: $success;
+    }
+
+    &--unsalable {
+      background-color: $danger;
+    }
   }
 
   &__thumbnail {
@@ -92,6 +110,8 @@ export default {
   &__body {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
   }
 
   &__title {

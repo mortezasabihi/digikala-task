@@ -11,13 +11,16 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/vue-fontawesome": "^3.0.0-4",
-    "@reduxjs/toolkit": "^1.6.0",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "lodash.debounce": "^4.0.8",
     "normalize.css": "^8.0.1",
     "register-service-worker": "^1.7.1",
     "vazir-font": "^29.0.1",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0"
+    "vue-content-loader": "^2.0.0",
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
