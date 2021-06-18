@@ -36,7 +36,7 @@ export default {
 .navbar {
   width: 100%;
   height: 60px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0px;
   background-color: #fff;
   position: sticky;
   top: 0;

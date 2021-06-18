@@ -14,9 +14,15 @@ app.component("FontAwesomeIcon", FontAwesomeIcon);
 // global config
 app.config.globalProperties.$filters = {
   slug(value) {
+    if (!value) {
+      return "";
+    }
     return value.replaceAll(" ", "-");
   },
   price(value) {
+    if (!value) {
+      return "";
+    }
     return value.toLocaleString();
   },
 };

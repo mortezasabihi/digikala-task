@@ -59,19 +59,26 @@ export default {
   },
   emits: ["close"],
   setup(props, { emit }) {
+    const route = useRoute();
     const showModal = ref(false);
     const modal = ref(null);
+
     const closeModal = () => emit("close");
 
     watch(
       () => props.show,
       (show) => {
+        if (show) {
+          document.querySelector("body").style.overflowY = "hidden";
+        } else {
+          document.querySelector("body").style.overflowY = "unset";
+        }
+
         showModal.value = show;
         showModal.value && nextTick(() => modal.value.focus());
       }
     );
 
-    const route = useRoute();
     watch(
       () => route.path,
       () => showModal.value && closeModal()
@@ -88,6 +95,9 @@ export default {
 
 <style lang="scss">
 .modal {
+  position: fixed;
+  z-index: 99;
+
   &__backdrop {
     position: fixed;
     z-index: 99;

@@ -34,7 +34,7 @@
       <!-- /title -->
 
       <!-- price -->
-      <div class="product-card__price">
+      <div class="product-card__price" v-if="product.price.selling_price">
         <strong class="product-card__price-value">
           {{ $filters.price(product.price.selling_price) }}
         </strong>
@@ -43,8 +43,17 @@
       <!-- /price -->
 
       <!-- add to cart -->
-      <button type="button" class="btn btn--info mt-3">
-        افزودن به سبد خرید
+      <button
+        type="button"
+        :disabled="product.status === 'out_of_stock'"
+        :class="[
+          'btn mt-3',
+          product.status === 'out_of_stock' ? 'btn--danger' : 'btn--info',
+        ]"
+      >
+        {{
+          product.status === "out_of_stock" ? "ناموجود" : "افزودن به سبد خرید"
+        }}
       </button>
       <!-- /add to cart -->
     </div>
