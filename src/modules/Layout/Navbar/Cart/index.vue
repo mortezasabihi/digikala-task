@@ -3,38 +3,49 @@
     <!-- button -->
     <button
       class="cart__button"
-      @click="route.path !== '/cart' && toggleVisiblity()"
+      @click="route.path !== '/cart' && !loading && toggleVisiblity()"
     >
       <FontAwesomeIcon :icon="['fas', 'shopping-cart']" />
 
       <!-- count -->
-      <span class="cart__count">5</span>
+      <span v-if="productsQuantity && !loading" class="cart__count">
+        {{ productsQuantity }}
+      </span>
       <!-- /count -->
     </button>
     <!-- /button -->
 
     <!-- modal -->
     <Modal :show="isVisible" @close="toggleVisiblity" title="سبد خرید">
-      <CartItem
-        v-for="(item, index) in items"
-        :key="index"
-        :thumbnail="item.thumbnail"
-        :name="item.name"
-        :price="item.price"
-      />
+      <template v-if="items.length">
+        <CartItem
+          v-for="item in items"
+          :key="item.product.id"
+          :id="item.product.id"
+          :thumbnail="item.product.images.main"
+          :name="item.product.title"
+          :price="item.product.price.selling_price"
+          :quantity="item.quantity"
+          @delete="onDelete"
+        />
 
-      <div class="cart__footer">
-        <div>
-          مبلغ قابل پرداخت:
-          <strong>{{ $filters.price(totalPrice) }}</strong> تومان
-        </div>
+        <div class="cart__footer">
+          <div>
+            مبلغ قابل پرداخت:
+            <strong>{{ $filters.price(totalPrice) }}</strong> تومان
+          </div>
 
-        <div>
-          <router-link class="btn btn--info" to="/cart">
-            ثبت سفارش
-            <FontAwesomeIcon class="mr-2" :icon="['fas', 'arrow-left']" />
-          </router-link>
+          <div>
+            <router-link class="btn btn--info" to="/cart">
+              ثبت سفارش
+              <FontAwesomeIcon class="mr-2" :icon="['fas', 'arrow-left']" />
+            </router-link>
+          </div>
         </div>
+      </template>
+
+      <div v-else>
+        <h2 class="cart__empty-title">سبد خرید شما <b>خالی</b> است ;(</h2>
       </div>
     </Modal>
     <!-- /modal -->
@@ -42,48 +53,38 @@
 </template>
 
 <script>
+import { computed } from "vue";
+import { useStore } from "vuex";
 import { useRoute } from "vue-router";
-import { useToggle } from "@/composables";
+import { useToggle, useCart } from "@/composables";
 import Modal from "@/modules/Modal";
 import CartItem from "./Item.vue";
+import { PRODUCTS_MODULE } from "@/modules/Products/store";
+import { LOADING } from "@/modules/Products/store/state";
 
 export default {
   name: "Cart",
-  data() {
-    return {
-      items: [
-        {
-          thumbnail:
-            "https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/vans.png",
-          name: "کفش مردانه ساق بلند",
-          price: 99000,
-        },
-        {
-          thumbnail:
-            "https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/vans.png",
-          name: "کفش مردانه ساق بلند",
-          price: 150000,
-        },
-      ],
-    };
-  },
   components: {
     Modal,
     CartItem,
   },
-  computed: {
-    totalPrice() {
-      return this.items.reduce((total, current) => total + current.price, 0);
-    },
-  },
   setup() {
-    const { isVisible, toggleVisiblity } = useToggle();
+    const store = useStore();
     const route = useRoute();
+    const { items, totalPrice, productsQuantity, onDelete } = useCart();
+    const { isVisible, toggleVisiblity } = useToggle();
+
+    const loading = computed(() => store.state[PRODUCTS_MODULE][LOADING]);
 
     return {
       isVisible,
       toggleVisiblity,
       route,
+      items,
+      totalPrice,
+      productsQuantity,
+      onDelete,
+      loading,
     };
   },
 };
@@ -134,6 +135,10 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding-top: 5px;
+  }
+
+  &__empty-title {
+    text-align: center;
   }
 }
 </style>

@@ -50,6 +50,9 @@
           'btn mt-3',
           product.status === 'out_of_stock' ? 'btn--danger' : 'btn--info',
         ]"
+        @click="
+          product.status === 'marketable' && $emit('add-to-cart', product)
+        "
       >
         {{
           product.status === "out_of_stock" ? "ناموجود" : "افزودن به سبد خرید"

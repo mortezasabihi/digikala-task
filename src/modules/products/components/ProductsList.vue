@@ -9,7 +9,7 @@
       :key="product.id"
       class="col-xs-12 col-sm-6 col-md-4"
     >
-      <ProductCard :product="product" />
+      <ProductCard :product="product" @add-to-cart="addToCart" />
     </div>
   </div>
 
@@ -26,6 +26,8 @@ import ProductCard from "./ProductCard";
 import { LoadingSpinner } from "@/modules/Ui";
 import { PRODUCTS_MODULE } from "@/modules/Products/store";
 import { LOADING, PRODUCTS } from "@/modules/Products/store/state";
+import { CART_MODULE } from "@/modules/Cart/store";
+import { ADD_PRODUCT_TO_CART } from "@/modules/Cart/store/actions";
 
 export default {
   name: "ProductsList",
@@ -37,9 +39,13 @@ export default {
   setup() {
     const store = useStore();
 
+    const addToCart = (product) =>
+      store.dispatch(`${CART_MODULE}/${ADD_PRODUCT_TO_CART}`, product);
+
     return {
       loading: computed(() => store.state[PRODUCTS_MODULE][LOADING]),
       products: computed(() => store.state[PRODUCTS_MODULE][PRODUCTS]),
+      addToCart,
     };
   },
 };

@@ -21,8 +21,12 @@
     </div>
     <!-- /price -->
 
+    <!-- quantity -->
+    <div class="cart-item__quantity">تعداد: {{ quantity }}</div>
+    <!-- /quantity -->
+
     <!-- delete -->
-    <button class="cart-item__delete" title="حذف">
+    <button class="cart-item__delete" title="حذف" @click="$emit('delete', id)">
       <FontAwesomeIcon :icon="['fas', 'trash']" />
     </button>
     <!-- /delete -->
@@ -33,6 +37,10 @@
 export default {
   name: "CartItem",
   props: {
+    id: {
+      required: true,
+      type: Number,
+    },
     thumbnail: {
       required: true,
       type: String,
@@ -45,6 +53,10 @@ export default {
       required: true,
       type: Number,
     },
+    quantity: {
+      required: true,
+      type: Number,
+    },
   },
 };
 </script>
@@ -52,10 +64,10 @@ export default {
 <style lang="scss" scoped>
 .cart-item {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 0.5fr;
+  grid-template-columns: 1fr 2fr 1fr 0.5fr 0.5fr;
   grid-template-rows: 1fr;
   gap: 0 0;
-  grid-template-areas: "action name price thubmnail";
+  grid-template-areas: "action name price quantity thubmnail";
   padding-bottom: 10px;
   margin-bottom: 10px;
   @include sm_up {
@@ -81,6 +93,13 @@ export default {
       font-size: 14px;
       text-align: center;
     }
+  }
+
+  &__quantity {
+    grid-area: quantity;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &__price {
