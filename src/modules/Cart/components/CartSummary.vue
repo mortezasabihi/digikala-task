@@ -6,9 +6,11 @@
 
     <div>
       <!-- content -->
-      <div class="cart-summary__content">
-        <div>قیمت کالاها (1)</div>
-        <div><strong>۶۳,۲۶۴,۰۰۰</strong> تومان</div>
+      <div class="cart-summary__content" v-if="!loading">
+        <div>قیمت کالاها ({{ productsQuantity }})</div>
+        <div>
+          <strong>{{ $filters.price(totalPrice) }}</strong> تومان
+        </div>
       </div>
       <!-- /content -->
 
@@ -20,8 +22,24 @@
 </template>
 
 <script>
+import { computed } from "vue";
+import { useStore } from "vuex";
+import { useCart } from "@/composables";
+import { PRODUCTS_MODULE } from "@/modules/Products/store";
+import { LOADING } from "@/modules/Products/store/state";
+
 export default {
   name: "CartSummary",
+  setup() {
+    const store = useStore();
+    const { totalPrice, productsQuantity } = useCart();
+
+    return {
+      totalPrice,
+      productsQuantity,
+      loading: computed(() => store.state[PRODUCTS_MODULE][LOADING]),
+    };
+  },
 };
 </script>
 

@@ -5,8 +5,8 @@
       <router-link to="/">
         <img
           class="cart-item__thumbnail"
-          src="https://dkstatics-public.digikala.com/digikala-products/114389900.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"
-          alt=""
+          :src="product.images.main"
+          :alt="$filters.slug(product.title)"
         />
       </router-link>
     </div>
@@ -16,7 +16,7 @@
     <div class="cart-item__content">
       <!-- title -->
       <div class="cart-item__title">
-        لپ تاپ 16 اینچی اپل مدل MacBook Pro MVVK2 2019 همراه با تاچ بار
+        {{ product.title }}
       </div>
       <!-- /title -->
 
@@ -30,18 +30,27 @@
         <div>
           <div class="cart-item__price">
             قیمت:
-            <strong class="cart-item__price-value">۶۳,۲۶۴,۰۰۰</strong> تومان
+            <strong class="cart-item__price-value">
+              {{ $filters.price(product.price.selling_price) }}
+            </strong>
+            تومان
           </div>
           <div class="cart-item__price">
             قیمت کل:
-            <strong class="cart-item__price-value">۶۳,۲۶۴,۰۰۰</strong> تومان
+            <strong class="cart-item__price-value">
+              {{ $filters.price(product.price.selling_price * count) }}
+            </strong>
+            تومان
           </div>
         </div>
         <!-- /price -->
 
         <!-- delete -->
         <div>
-          <button class="cart-item__delete">
+          <button
+            @click="$emit('delete', product.id)"
+            class="cart-item__delete"
+          >
             <FontAwesomeIcon :icon="['fas', 'trash-alt']" />
             حذف
           </button>
@@ -57,6 +66,7 @@
 </template>
 
 <script>
+import { ref, watch } from "vue";
 import { QuantitySelector } from "@/modules/Ui";
 
 export default {
@@ -64,9 +74,26 @@ export default {
   components: {
     QuantitySelector,
   },
-  data() {
+  props: {
+    quantity: {
+      required: true,
+      type: Number,
+    },
+    product: {
+      required: true,
+      type: Object,
+    },
+  },
+  setup(props, { emit }) {
+    const count = ref(props.quantity);
+
+    watch(
+      () => count.value,
+      (value) => emit("change", { quantity: value, id: props.product.id })
+    );
+
     return {
-      count: 1,
+      count,
     };
   },
 };

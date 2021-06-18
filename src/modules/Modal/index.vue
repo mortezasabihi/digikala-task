@@ -125,10 +125,10 @@ export default {
       width: 75%;
     }
     @include md_down {
-      width: 60%;
+      width: 80%;
     }
     @include lg_down {
-      width: 40%;
+      width: 60%;
     }
   }
 
