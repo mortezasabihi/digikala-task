@@ -45,8 +45,15 @@ export default {
 
     // generate query for api call
     const generateQuery = () => {
-      const { has_selling_stock, sort, price_min, price_max } = route.query;
+      const { has_selling_stock, sort, price_min, price_max, search } =
+        route.query;
       let query = "";
+
+      // check if has search query
+      if (search) {
+        query = `${query}&q=${search}`;
+      }
+
       // check if has selling stock
       if (has_selling_stock) {
         query = `${query}&has_selling_stock=${has_selling_stock}`;
@@ -74,7 +81,8 @@ export default {
 
       if (
         element.getBoundingClientRect().bottom <= window.innerHeight &&
-        !store.state[PRODUCTS_MODULE][LOADING]
+        !store.state[PRODUCTS_MODULE][LOADING] &&
+        route.name === "Home"
       ) {
         store.commit(`${PRODUCTS_MODULE}/${NEXT_PAGE}`);
         fetch(generateQuery());
@@ -85,8 +93,10 @@ export default {
     watch(
       () => route.query,
       () => {
-        store.commit(`${PRODUCTS_MODULE}/${RESET_PRODUCTS}`);
-        fetch(generateQuery());
+        if (route.name === "Home") {
+          store.commit(`${PRODUCTS_MODULE}/${RESET_PRODUCTS}`);
+          fetch(generateQuery());
+        }
       },
       {
         immediate: true,

@@ -9,7 +9,7 @@
       <!-- input -->
       <input
         type="search"
-        v-model="search"
+        v-model="searchInput"
         placeholder="جستجو در دیجی کالا ..."
         autocomplete="off"
         class="search__input"
@@ -21,11 +21,41 @@
 </template>
 
 <script>
+import { ref, watch } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import debounce from "lodash.debounce";
+
 export default {
   name: "Search",
-  data() {
+  setup() {
+    const router = useRouter();
+    const route = useRoute();
+    const searchInput = ref("");
+
+    const search = debounce((query) => {
+      router.push({
+        name: "Home",
+        query: {
+          ...route.query,
+          search: query,
+        },
+      });
+    }, 1000);
+
+    watch(
+      () => searchInput.value,
+      (value) => search(value)
+    );
+
+    // couldn't accessed to query param in layout component :(
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get("search");
+    if (searchParam) {
+      searchInput.value = searchParam;
+    }
+
     return {
-      search: "",
+      searchInput,
     };
   },
 };

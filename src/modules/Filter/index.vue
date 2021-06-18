@@ -123,20 +123,25 @@ export default {
 
     // on price change
     const onPriceChange = debounce((type, value) => {
-      if (value) {
+      if (!value || value === 0) {
+        if (type === "min") {
+          form.value.min = 0;
+        } else if (type === "max") {
+          form.value.max = priceRef.value.max;
+        }
+      } else {
         form.value[type] = value;
-
-        router.push({
-          name: "Home",
-          query: {
-            ...route.query,
-            price_min:
-              form.value.min === null ? priceRef.value.min : form.value.min,
-            price_max:
-              form.value.max === 0 ? priceRef.value.max : form.value.max,
-          },
-        });
       }
+
+      router.push({
+        name: "Home",
+        query: {
+          ...route.query,
+          price_min:
+            form.value.min === null ? priceRef.value.min : form.value.min,
+          price_max: form.value.max === 0 ? priceRef.value.max : form.value.max,
+        },
+      });
     }, 1000);
 
     return {
