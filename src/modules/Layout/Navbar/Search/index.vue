@@ -47,7 +47,7 @@ export default {
       (value) => search(value)
     );
 
-    // couldn't accessed to query param in layout component :(
+    // couldn't access to query param in layout component :(
     const urlParams = new URLSearchParams(window.location.search);
     const searchParam = urlParams.get("search");
     if (searchParam) {
