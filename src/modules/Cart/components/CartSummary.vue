@@ -1,5 +1,5 @@
 <template>
-  <div class="cart-summary">
+  <div :class="['cart-summary', loading && 'cart-summary--loading']">
     <!-- heading -->
     <div class="cart-summary__heading">خلاصه سفارش</div>
     <!-- /heading -->
@@ -22,22 +22,18 @@
 </template>
 
 <script>
-import { computed } from "vue";
-import { useStore } from "vuex";
-import { useCart } from "@/composables";
-import { PRODUCTS_MODULE } from "@/modules/Products/store";
-import { LOADING } from "@/modules/Products/store/state";
+import { useCart, useProductsLoading } from "@/composables";
 
 export default {
   name: "CartSummary",
   setup() {
-    const store = useStore();
     const { totalPrice, productsQuantity } = useCart();
+    const loading = useProductsLoading();
 
     return {
       totalPrice,
       productsQuantity,
-      loading: computed(() => store.state[PRODUCTS_MODULE][LOADING]),
+      loading,
     };
   },
 };
@@ -49,6 +45,17 @@ export default {
   @extend .p-3;
   position: sticky;
   top: 80px;
+
+  &--loading {
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.1);
+      cursor: wait;
+      border-radius: 10px;
+    }
+  }
 
   &__heading {
     font-weight: 500;

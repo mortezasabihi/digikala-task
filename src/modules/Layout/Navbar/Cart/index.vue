@@ -53,14 +53,10 @@
 </template>
 
 <script>
-import { computed } from "vue";
-import { useStore } from "vuex";
 import { useRoute } from "vue-router";
-import { useToggle, useCart } from "@/composables";
+import { useToggle, useCart, useProductsLoading } from "@/composables";
 import Modal from "@/modules/Modal";
 import CartItem from "./Item.vue";
-import { PRODUCTS_MODULE } from "@/modules/Products/store";
-import { LOADING } from "@/modules/Products/store/state";
 
 export default {
   name: "Cart",
@@ -69,12 +65,10 @@ export default {
     CartItem,
   },
   setup() {
-    const store = useStore();
     const route = useRoute();
+    const loading = useProductsLoading();
     const { items, totalPrice, productsQuantity, onDelete } = useCart();
     const { isVisible, toggleVisiblity } = useToggle();
-
-    const loading = computed(() => store.state[PRODUCTS_MODULE][LOADING]);
 
     return {
       isVisible,

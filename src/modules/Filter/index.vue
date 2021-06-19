@@ -25,14 +25,15 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter, useRoute } from "vue-router";
 import debounce from "lodash.debounce";
+import { useProductsLoading } from "@/composables";
 import Collapse from "./Collapse.vue";
 import { PriceRange, HasSellingStock, Sort } from "./Sections";
 import { PRODUCTS_MODULE } from "@/modules/Products/store";
-import { FILTERS, LOADING } from "@/modules/Products/store/state";
+import { FILTERS } from "@/modules/Products/store/state";
 import { SET_FILTERS } from "@/modules/Products/store/mutations";
 
 export default {
@@ -47,6 +48,7 @@ export default {
     const store = useStore();
     const router = useRouter();
     const route = useRoute();
+    const loading = useProductsLoading();
 
     const priceRef = ref({
       min: 0,
@@ -151,7 +153,7 @@ export default {
       onHasSellingStockChange,
       onSortChange,
       onPriceChange,
-      loading: computed(() => store.state[PRODUCTS_MODULE][LOADING]),
+      loading,
     };
   },
 };
