@@ -8,7 +8,7 @@
       <FontAwesomeIcon :icon="['fas', 'shopping-cart']" />
 
       <!-- count -->
-      <span v-if="productsQuantity && !loading" class="cart__count">
+      <span v-if="productsQuantity" class="cart__count">
         {{ productsQuantity }}
       </span>
       <!-- /count -->

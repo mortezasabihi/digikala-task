@@ -15,7 +15,7 @@
 
     <!-- thumbnail -->
     <div>
-      <router-link to="/">
+      <router-link :to="{ name: 'Product', params: { id: product.id } }">
         <img
           class="product-card__thumbnail"
           :src="product.images.main"
@@ -28,7 +28,10 @@
     <!-- body -->
     <div class="product-card__body">
       <!-- title -->
-      <router-link to="/" class="product-card__title">
+      <router-link
+        :to="{ name: 'Product', params: { id: product.id } }"
+        class="product-card__title"
+      >
         {{ product.title }}
       </router-link>
       <!-- /title -->

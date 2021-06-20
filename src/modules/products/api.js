@@ -14,4 +14,7 @@ export default {
 
     return axios.get(endpoint);
   },
+  getProduct(id) {
+    return axios.get(`/front-end/product/${id}`);
+  },
 };

@@ -1,4 +1,11 @@
-import { LOADING, PRODUCTS, PAGINATION, FILTERS } from "./state";
+import {
+  LOADING,
+  PRODUCTS,
+  PAGINATION,
+  FILTERS,
+  PRODUCT,
+  STATUS,
+} from "./state";
 
 export const SET_LOADING = "setLoading";
 export const SET_PRODUCTS = "setProducts";
@@ -7,6 +14,9 @@ export const SET_FILTERS = "setFilters";
 export const NEXT_PAGE = "nextPage";
 export const RESET_PRODUCTS = "resetProducts";
 export const RESET_PAGE = "resetPage";
+export const SET_PRODUCT = "setProduct";
+export const SET_STATUS = "setStatus";
+export const RESET_PRODUCT = "resetProduct";
 
 export default {
   [SET_LOADING](state, payload) {
@@ -31,5 +41,14 @@ export default {
   },
   [RESET_PAGE](state) {
     state[PAGINATION].current_page = 1;
+  },
+  [SET_PRODUCT](state, payload) {
+    state[PRODUCT] = payload;
+  },
+  [SET_STATUS](state, payload) {
+    state[STATUS] = payload;
+  },
+  [RESET_PRODUCT](state) {
+    state[PRODUCT] = null;
   },
 };
