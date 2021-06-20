@@ -68,8 +68,8 @@ export default {
         const { price } = store.state[PRODUCTS_MODULE][FILTERS];
 
         // set price
-        priceRef.value.min = price.options.min;
-        priceRef.value.max = price.options.max;
+        priceRef.value.min = price?.options?.min;
+        priceRef.value.max = price?.options?.max;
       }
     });
 
@@ -141,7 +141,8 @@ export default {
           ...route.query,
           price_min:
             form.value.min === null ? priceRef.value.min : form.value.min,
-          price_max: form.value.max === 0 ? priceRef.value.max : form.value.max,
+          price_max:
+            form.value.max === null ? priceRef.value.max : form.value.max,
         },
       });
     }, 1000);

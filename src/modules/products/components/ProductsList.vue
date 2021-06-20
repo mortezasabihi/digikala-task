@@ -3,6 +3,8 @@
   <ProductsLoading v-if="loading && !products.length" />
   <!-- /loading -->
 
+  <h1 v-else-if="!loading && !products.length">کالایی پیدا نشد :\</h1>
+
   <div v-else class="card row no-gap mb-3">
     <div
       v-for="product in products"

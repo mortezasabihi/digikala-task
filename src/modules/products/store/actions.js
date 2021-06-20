@@ -18,9 +18,7 @@ export default {
   async [GET_ALL_PRODUCTS]({ commit, state }, payload) {
     commit(SET_LOADING, true);
 
-    if (payload) {
-      commit(RESET_PAGE);
-    }
+    payload && commit(RESET_PAGE);
 
     const {
       data: { data },
@@ -32,6 +30,7 @@ export default {
     commit(SET_PRODUCTS, data.products);
     commit(SET_PAGINATION, data.pager);
     commit(SET_FILTERS, { ...data.filters, sort: data.sort });
+    commit(SET_STATUS, data.status);
 
     commit(SET_LOADING, false);
   },
