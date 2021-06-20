@@ -2,7 +2,7 @@
   <td class="cart-item">
     <!-- thumbnail -->
     <div>
-      <router-link to="/">
+      <router-link :to="{ name: 'Product', params: { id: product.id } }">
         <img
           class="cart-item__thumbnail"
           :src="product.images.main"

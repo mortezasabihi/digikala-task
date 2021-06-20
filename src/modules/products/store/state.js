@@ -2,6 +2,8 @@ export const PRODUCTS = "products";
 export const LOADING = "loading";
 export const PAGINATION = "pagination";
 export const FILTERS = "filters";
+export const PRODUCT = "product";
+export const STATUS = "status";
 
 export default () => ({
   [PRODUCTS]: [],
@@ -12,4 +14,6 @@ export default () => ({
     total_items: 0,
   },
   [FILTERS]: {},
+  [PRODUCT]: null,
+  [STATUS]: 0,
 });

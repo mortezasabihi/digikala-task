@@ -21,14 +21,12 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import { useProductsLoading } from "@/composables";
+import { useProductsLoading, useCart } from "@/composables";
 import ProductsLoading from "./ProductsLoading";
 import ProductCard from "./ProductCard";
 import { LoadingSpinner } from "@/modules/Ui";
 import { PRODUCTS_MODULE } from "@/modules/Products/store";
 import { PRODUCTS } from "@/modules/Products/store/state";
-import { CART_MODULE } from "@/modules/Cart/store";
-import { ADD_PRODUCT_TO_CART } from "@/modules/Cart/store/actions";
 
 export default {
   name: "ProductsList",
@@ -40,9 +38,7 @@ export default {
   setup() {
     const store = useStore();
     const loading = useProductsLoading();
-
-    const addToCart = (product) =>
-      store.dispatch(`${CART_MODULE}/${ADD_PRODUCT_TO_CART}`, product);
+    const { addToCart } = useCart();
 
     return {
       loading,

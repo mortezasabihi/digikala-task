@@ -1,7 +1,5 @@
 <template>
-  <!-- loading -->
-  <LoadingSpinner v-if="loading" />
-  <!-- /loading -->
+  <h1 v-if="!items.length">سبد خرید شما خالی است ;(</h1>
 
   <div v-else class="cart-list">
     <!-- table -->
@@ -9,7 +7,7 @@
       <tbody>
         <CartItem
           v-for="item in items"
-          :key="item.id"
+          :key="item.product.id"
           :product="item.product"
           :quantity="item.quantity"
           @delete="onDelete"
@@ -24,17 +22,13 @@
 <script>
 import { useStore } from "vuex";
 import { useCart, useProductsLoading } from "@/composables";
-import { LoadingSpinner } from "@/modules/Ui";
 import CartItem from "./CartItem.vue";
 import { CART_MODULE } from "@/modules/Cart/store";
 import { SET_ITEM_QUANTITY } from "@/modules/Cart/store/mutations";
-import { PRODUCTS_MODULE } from "@/modules/Products/store";
-import { GET_ALL_PRODUCTS } from "@/modules/Products/store/actions";
 
 export default {
   name: "CartList",
   components: {
-    LoadingSpinner,
     CartItem,
   },
   setup() {
@@ -44,8 +38,6 @@ export default {
 
     const setCount = (params) =>
       store.commit(`${CART_MODULE}/${SET_ITEM_QUANTITY}`, params);
-
-    store.dispatch(`${PRODUCTS_MODULE}/${GET_ALL_PRODUCTS}`);
 
     return {
       items,
